@@ -8,12 +8,15 @@
  *
  * Unlike many flight components this component is a CommonJS module.
  */
+
+'use strict';
+
 var flight = require('flightjs');
 var Q = require('q');
 
 module.exports = flight.component(player);
 
-function player() {
+function player () {
   var defaultAttrs = {
     clientId: null,
     defaultTrackUrl: 'https://soundcloud.com/agentlexie/irule'
@@ -39,8 +42,9 @@ function player() {
    * Here we initialize the SoundCloud SDK with the given `clientId`
    * and set up listeners for play, stop and pause.
    */
-  function afterInit() {
+  function afterInit () {
     // Initialize SoundCloud SDK
+    /* eslint camelcase: 0 */
     SC.initialize({ client_id: this.attr.clientId });
 
     // Listen to sound events
@@ -55,22 +59,22 @@ function player() {
    * This function gets a SoundCloud track via its URL
    * or unpauses a paused track.
    */
-  function soundPlay(e, data) {
+  function soundPlay (e, data) {
+    var trackUrl;
     var currentlyPlaying = this.$node.data('currently-playing');
 
     // If the sound object exists and the sent URL is the same
     // as the one stored in currently-playing just unpause the track.
     if (this.sound && data.trackUrl === currentlyPlaying) {
       this.sound.play();
-    }
+    } else {
     // Grab either the sent URL or the default URL with the SC API,
     // play the sound and store the url as the currently-playing one in a data attr.
-    else {
-      var trackUrl = data.trackUrl || this.attr.defaultTrackUrl;
+      trackUrl = data.trackUrl || this.attr.defaultTrackUrl;
 
       this.getTrack(trackUrl)
       .then(this.getSound.bind(this))
-      .then(function(sound) {
+      .then(function (sound) {
 
         if (this.sound) {
           this.sound.stop();
@@ -88,7 +92,7 @@ function player() {
   /**
    * Stop a SoundCloud sound.
    */
-  function soundStop() {
+  function soundStop () {
     if (this.sound) {
       this.sound.stop();
     } else {
@@ -99,7 +103,7 @@ function player() {
   /**
    * Pause a SoundCloud sound.
    */
-  function soundPause() {
+  function soundPause () {
     if (this.sound) {
       this.sound.pause();
     } else {
@@ -110,11 +114,11 @@ function player() {
   /**
    * Use the SoundCloud SDK to get track data and play sounds
    */
-  function getTrack(url) {
+  function getTrack (url) {
     var deferred = Q.defer();
 
     // Get track object from track URL
-    SC.get('/resolve', { url: url }, function getTrackCb(track, err) {
+    SC.get('/resolve', { url: url }, function getTrackCb (track, err) {
       if (err) {
         deferred.reject(new Error(err.message));
       } else {
@@ -130,7 +134,7 @@ function player() {
    *
    * The callback receives a track object resolved from the track URL.
    */
-  function getSound(track) {
+  function getSound (track) {
     var deferred = Q.defer();
     var wP = { whilePlaying: this.whilePlaying.bind(this) };
 
@@ -139,7 +143,7 @@ function player() {
     // has to subscribe to the 'sound.data' event.
     this.trigger('sound.data', { soundData: track });
 
-    SC.stream('/tracks/' + track.id, wP, function getSoundCb(sound, err) {
+    SC.stream('/tracks/' + track.id, wP, function getSoundCb (sound, err) {
       if (err) {
         deferred.reject(new Error(err.message));
       } else {
@@ -153,7 +157,7 @@ function player() {
   /**
    * Callback for the whileplaying method.
    */
-  function whilePlaying() {
+  function whilePlaying () {
     // Remove loading ani if present.
     console.log(this.position, this.duration, this.position / this.duration);
   }
