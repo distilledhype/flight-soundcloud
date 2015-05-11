@@ -16,6 +16,22 @@ var Q = require('q');
 
 module.exports = flight.component(player);
 
+
+// (function(define) {
+//
+//     define(function (require, exports, module) {
+//         var b = require('b');
+//
+//         return function () {};
+//     });
+//
+// }( // Help Node out by setting up define.
+//      typeof module === 'object' && typeof define !== 'function'
+//     ? function (factory) { module.exports = factory(require, exports, module); }
+//     : define
+// ));
+
+
 function player () {
   var defaultAttrs = {
     clientId: null,

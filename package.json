@@ -1,0 +1,32 @@
+{
+  "name": "flight-soundcloud",
+  "version": "1.0.0",
+  "description": "A FlightJS component that plays SoundCloud tracks via events.",
+  "main": "flight-soundcloud.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/distilledhype/flight-soundcloud.git"
+  },
+  "keywords": [
+    "flightjs",
+    "flight",
+    "soundcloud",
+    "music",
+    "tracks"
+  ],
+  "author": "Kahlil Lechelt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/distilledhype/flight-soundcloud/issues"
+  },
+  "homepage": "https://github.com/distilledhype/flight-soundcloud",
+  "devDependencies": {
+    "mocha": "^2.2.4"
+  },
+  "browser": {
+    "mocha-flight": "./test/lib/mocha-flight.js"
+  }
+}
