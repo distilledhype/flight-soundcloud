@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/distilledhype/flight-soundcloud",
   "devDependencies": {
-    "mocha": "^2.2.4"
+    "mocha": "^3.4.2"
   },
   "browser": {
     "mocha-flight": "./test/lib/mocha-flight.js"
